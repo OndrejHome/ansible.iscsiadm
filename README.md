@@ -12,16 +12,19 @@ Role Variables
 --------------
 
   - iSCSI target tcp port (defaults to 3260)
+
     ```
     iscsi_target_port: 3260
     ```
 
   - (optional) iSCSI initiator WWN
+
     ```
     iscsi_initiator_wwn: iqn.1994-05.com.redhat:client1
     ```
 
   - (optional) iSCSI target IP and target WWN (when supplied the role will try to discover target and login into it)
+
     ```
     iscsi_target_wwn: iqn.1994-05.com.redhat:target
     iscsi_target_ip: 192.168.0.1
