@@ -31,11 +31,13 @@ Example Playbook
 ----------------
 
 Without any variables passed this role just installs and enables iscsiadm tools on system
+
     - hosts: servers
       roles:
          - { role: OndrejHome.iscsiadm }
 
 Below example will install iscsiadm, set initiator WWN and instruct systems to discover and login into iSCSI target.
+
     - hosts: servers
       roles:
          - { role: OndrejHome.iscsiadm, iscsi_target_ip: "192.168.0.1", iscsi_target_wwn: "iqn.1994-05.com.redhat:target", iscsi_initiator_wwn: "iqn.1994-05.com.redhat:client1" }
