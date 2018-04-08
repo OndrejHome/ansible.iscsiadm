@@ -1,0 +1,17 @@
+---
+- name: Discover WWNs from iSCSI server
+  shell: "iscsiadm --mode discoverydb --type sendtargets --portal {{ iscsi_target_ip }}:{{ iscsi_target_port }} --discover"
+  args:
+    creates: "/var/lib/iscsi/send_targets/{{ iscsi_target_ip }},{{ iscsi_target_port }}/st_config"
+
+- name: Find which targets are provided by iSCSI server
+  find:
+    paths: [ "/var/lib/iscsi/send_targets/{{ iscsi_target_ip }},{{ iscsi_target_port }}" ] 
+    file_type: 'link'
+  register: find_result
+
+  # FIXME: figure out how to run login only when we are not yet logged in
+- name: Login into iSCSI server
+  shell: "iscsiadm --mode node --targetname {{ (item.path|basename).split(',')[0] }} --portal {{ (item.path|basename).split(',')[1] }}:{{ (item.path|basename).split(',')[2] }} --login"
+  with_items: 
+    - "{{ find_result['files'] }}"

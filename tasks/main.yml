@@ -1,26 +1,22 @@
 ---
-- name: install selinux python
+- name: Install selinux python
   yum: name=libselinux-python state=installed
 
-- name: install packages
+- name: Install packages
   yum: name=iscsi-initiator-utils state=installed
 
 - name: Start and enable iscsid service
   service: name=iscsid enabled=yes state=started
 
-- name: setup initiator name
-  lineinfile: dest=/etc/iscsi/initiatorname.iscsi regexp="^InitiatorName=" line="InitiatorName={{ iscsi_initiator_wwn }}"
-  when: iscsi_initiator_wwn is defined
+- name: Collect facts about installed iSCSI initiator
+  iscsiadm_facts:
+
+- name: Setup iSCSI Initiator name
+  lineinfile: dest=/etc/iscsi/initiatorname.iscsi regexp="^InitiatorName=" line="InitiatorName={{ custom_iscsi_initiator_name is defined|ternary(custom_iscsi_initiator_name,iscsi_initiator_name) }}"
   notify: restart iscsid
 
 - meta: flush_handlers
 
-- name: discover iSCSI server
-  shell: "iscsiadm --mode discoverydb --type sendtargets --portal {{ iscsi_target_ip }} --discover"
+- name: Connect to iSCSI target
+  include_tasks: connect_to_target.yml
   when: iscsi_target_ip is defined
-  args:
-    creates: "/var/lib/iscsi/nodes/{{ iscsi_target_wwn }}/{{ iscsi_target_ip }},{{ iscsi_target_port }},1/default"
-
-- name: login into iSCSI server
-  shell: "iscsiadm --mode node --targetname {{ iscsi_target_wwn }} --portal {{ iscsi_target_ip }}:{{ iscsi_target_port }} --login"
-  when: iscsi_target_ip is defined and iscsi_target_wwn is defined
