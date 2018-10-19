@@ -19,25 +19,24 @@ EXAMPLES = '''
 
 '''
 
-from subprocess import call
 
 def main():
         module = AnsibleModule(
-                argument_spec = dict(),
+                argument_spec=dict(),
                 supports_check_mode=True
         )
 
         result = {}
 
         try:
-            file = open('/etc/iscsi/initiatorname.iscsi','r')
+            file = open('/etc/iscsi/initiatorname.iscsi', 'r')
             text = file.readlines()[0].rstrip()
             result['ansible_facts'] = {}
             result['ansible_facts']['iscsi_initiator_name'] = text.split('=')[1]
         except IOError as e:
             result['ansible_facts'] = {}
         except OSError as e:
-            module.fail_json(msg="Failed to open /etc/iscsi/initiatorname.iscsi file - %s" %(e) )
+            module.fail_json(msg="Failed to open /etc/iscsi/initiatorname.iscsi file - %s" % (e))
         module.exit_json(**result)
 
 # import module snippets
