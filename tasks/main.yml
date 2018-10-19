@@ -1,18 +1,28 @@
 ---
 - name: Install selinux python
-  yum: name=libselinux-python state=installed
+  yum:
+    name: 'libselinux-python'
+    state: 'installed'
 
 - name: Install packages
-  yum: name=iscsi-initiator-utils state=installed
+  yum:
+    name: 'iscsi-initiator-utils'
+    state: 'installed'
 
 - name: Start and enable iscsid service
-  service: name=iscsid enabled=yes state=started
+  service:
+    name: 'iscsid'
+    enabled: true
+    state: 'started'
 
 - name: Collect facts about installed iSCSI initiator
   iscsiadm_facts:
 
 - name: Setup iSCSI Initiator name
-  lineinfile: dest=/etc/iscsi/initiatorname.iscsi regexp="^InitiatorName=" line="InitiatorName={{ custom_iscsi_initiator_name is defined|ternary(custom_iscsi_initiator_name,iscsi_initiator_name) }}"
+  lineinfile:
+    dest: '/etc/iscsi/initiatorname.iscsi'
+    regexp: '^InitiatorName='
+    line: "InitiatorName={{ custom_iscsi_initiator_name is defined|ternary(custom_iscsi_initiator_name,iscsi_initiator_name) }}"
   notify: restart iscsid
 
 - meta: flush_handlers
