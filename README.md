@@ -16,19 +16,19 @@ Role Variables
     be stored in `iscsi_initiator_name` variable for each system.
 
     ```
-    iscsi_target_ip: 192.168.0.1
+    iscsi_target_ip: '192.168.0.1'
     ```
 
   - (optional) iSCSI target tcp port (defaults to 3260)
 
     ```
-    iscsi_target_port: 3260
+    iscsi_target_port: '3260'
     ```
 
   - (optional) custom_iscsi_initiator_name - use custom initiator name instead of system randomly generated one
 
     ```
-    custom_iscsi_initiator_name:: iqn.1994-05.com.redhat:my_custom_initiator
+    custom_iscsi_initiator_name: 'iqn.1994-05.com.redhat:my_custom_initiator'
     ```
 
 Example Playbook
@@ -38,13 +38,13 @@ Without any variables passed this role just installs and enables iscsiadm tools 
 
     - hosts: servers
       roles:
-         - { role: OndrejHome.iscsiadm }
+         - { role: 'OndrejHome.iscsiadm' }
 
 Below example will install iscsiadm and instruct systems to discover and login into iSCSI target.
 
     - hosts: servers
       roles:
-         - { role: OndrejHome.iscsiadm, iscsi_target_ip: "192.168.0.1"}
+         - { role: 'OndrejHome.iscsiadm', iscsi_target_ip: '192.168.0.1'}
 
 License
 -------
