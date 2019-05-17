@@ -1,9 +1,4 @@
 ---
-- name: Install selinux python
-  yum:
-    name: 'libselinux-python'
-    state: 'installed'
-
 - name: Install packages
   yum:
     name: 'iscsi-initiator-utils'
