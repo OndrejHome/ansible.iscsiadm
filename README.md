@@ -38,13 +38,13 @@ Without any variables passed this role just installs and enables iscsiadm tools 
 
     - hosts: servers
       roles:
-         - { role: 'OndrejHome.iscsiadm' }
+         - { role: 'ondrejhome.iscsiadm' }
 
 Below example will install iscsiadm and instruct systems to discover and login into iSCSI target.
 
     - hosts: servers
       roles:
-         - { role: 'OndrejHome.iscsiadm', iscsi_target_ip: '192.168.0.1'}
+         - { role: 'ondrejhome.iscsiadm', iscsi_target_ip: '192.168.0.1'}
 
 License
 -------
