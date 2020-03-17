@@ -1,12 +1,16 @@
 ---
+
+- include_vars: vars_RedHat_CentOS.yml
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
+
 - name: Install packages
   yum:
-    name: 'iscsi-initiator-utils'
+    name: "{{ iscsiadmin_package }}"
     state: 'installed'
 
-- name: Start and enable iscsid service
+- name: "Start and enable {{ iscsiadmin_service }} service"
   service:
-    name: 'iscsid'
+    name: "{{ iscsiadmin_service }}"
     enabled: true
     state: 'started'
 
