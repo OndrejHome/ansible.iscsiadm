@@ -25,6 +25,10 @@
     dest: '/etc/iscsi/initiatorname.iscsi'
     regexp: '^InitiatorName='
     line: "InitiatorName={{ custom_iscsi_initiator_name is defined|ternary(custom_iscsi_initiator_name,iscsi_initiator_name) }}"
+    create: 'yes'
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
   notify: restart iscsid
 
 - meta: flush_handlers
