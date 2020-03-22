@@ -6,7 +6,7 @@
 - include_vars: vars_SUSE_openSUSE.yml
   when: 'ansible_os_family == "Suse" or ansible_os_family == "openSUSE Leap"'
 
-- name: Install packages
+- name: "Install package(s) {{ iscsiadmin_package }}"
   yum:
     name: "{{ iscsiadmin_package }}"
     state: 'installed'
