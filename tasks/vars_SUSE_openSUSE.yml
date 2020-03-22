@@ -1,0 +1,4 @@
+---
+
+iscsiadmin_package: open-iscsi
+iscsiadmin_service: iscsid

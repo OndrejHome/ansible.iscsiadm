@@ -3,6 +3,9 @@
 - include_vars: vars_RedHat_CentOS.yml
   when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
+- include_vars: vars_SUSE_openSUSE.yml
+  when: 'ansible_os_family == "Suse" or ansible_os_family == "openSUSE Leap"'
+
 - name: Install packages
   yum:
     name: "{{ iscsiadmin_package }}"
