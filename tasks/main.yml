@@ -29,7 +29,7 @@
     owner: 'root'
     group: 'root'
     mode: '0600'
-  notify: restart iscsid
+  notify: restart service
 
 - meta: flush_handlers
 
