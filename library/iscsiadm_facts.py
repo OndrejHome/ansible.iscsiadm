@@ -30,7 +30,10 @@ def main():
 
         try:
             file = open('/etc/iscsi/initiatorname.iscsi', 'r')
-            text = file.readlines()[0].rstrip()
+            for line in file:
+                if line.startswith('#'):
+                    continue
+                text = line.rstrip()
             result['ansible_facts'] = {}
             result['ansible_facts']['iscsi_initiator_name'] = text.split('=')[1]
         except IOError as e:
