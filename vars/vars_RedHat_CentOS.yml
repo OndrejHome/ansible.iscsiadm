@@ -2,3 +2,4 @@
 
 iscsiadmin_package: iscsi-initiator-utils
 iscsiadmin_service: iscsid
+send_targets_path: '/var/lib/iscsi/send_targets/'
