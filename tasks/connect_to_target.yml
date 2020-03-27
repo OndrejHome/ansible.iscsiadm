@@ -8,7 +8,7 @@
 
 - name: Find which targets are provided by iSCSI server
   find:
-    paths: [ "/var/lib/iscsi/send_targets/{{ iscsi_target_ip }},{{ iscsi_target_port }}" ]
+    paths: [ "/var/lib/iscsi/send_targets/{{ iscsi_target_ip }},{{ iscsi_target_port }}", "/etc/iscsi/send_targets/{{ iscsi_target_ip }},{{ iscsi_target_port }}" ]
     file_type: 'link'
   register: find_result
 
