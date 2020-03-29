@@ -7,7 +7,7 @@
   when: 'ansible_os_family == "Suse" or ansible_os_family == "openSUSE Leap"'
 
 - name: "Install package(s) {{ iscsiadmin_package }}"
-  yum:
+  package:
     name: "{{ iscsiadmin_package }}"
     state: 'installed'
 
