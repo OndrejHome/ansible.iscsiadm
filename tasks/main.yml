@@ -1,9 +1,11 @@
 ---
 
-- include_vars: vars_RedHat_CentOS.yml
+- name: Include RHEL/CentOS variables
+  include_vars: vars_RedHat_CentOS.yml
   when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
-- include_vars: vars_SUSE_openSUSE.yml
+- name: Include SLES/openSUSE variable
+  include_vars: vars_SUSE_openSUSE.yml
   when: 'ansible_os_family == "Suse" or ansible_os_family == "openSUSE Leap"'
 
 - name: "Install package(s) {{ iscsiadmin_package }}"
