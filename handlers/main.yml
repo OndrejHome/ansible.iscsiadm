@@ -1,5 +1,5 @@
 ---
-- name: restart iscsid
+- name: "restart service"
   service:
-    name: 'iscsid'
+    name: "{{ iscsiadmin_service }}"
     state: 'restarted'

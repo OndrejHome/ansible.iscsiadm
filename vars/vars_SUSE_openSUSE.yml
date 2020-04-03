@@ -1,0 +1,5 @@
+---
+
+iscsiadmin_package: open-iscsi
+iscsiadmin_service: iscsid
+send_targets_path: '/etc/iscsi/send_targets/'

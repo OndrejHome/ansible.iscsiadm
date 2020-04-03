@@ -4,11 +4,11 @@
     iscsiadm --mode discoverydb --type sendtargets --discover
     --portal {{ iscsi_target_ip }}:{{ iscsi_target_port }}
   args:
-    creates: "/var/lib/iscsi/send_targets/{{ iscsi_target_ip }},{{ iscsi_target_port }}/st_config"
+    creates: "{{ send_targets_path }}{{ iscsi_target_ip }},{{ iscsi_target_port }}/st_config"
 
 - name: Find which targets are provided by iSCSI server
   find:
-    paths: [ "/var/lib/iscsi/send_targets/{{ iscsi_target_ip }},{{ iscsi_target_port }}" ]
+    paths: [ "{{ send_targets_path }}{{ iscsi_target_ip }},{{ iscsi_target_port }}" ]
     file_type: 'link'
   register: find_result
 
