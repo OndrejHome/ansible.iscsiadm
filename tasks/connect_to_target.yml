@@ -19,3 +19,5 @@
     --portal {{ (item.path|basename).split(',')[1] }}:{{ (item.path|basename).split(',')[2] }}
   with_items:
     - "{{ find_result['files'] }}"
+  register: login_result
+  failed_when: 'login_result.rc != 0 and not "1 session requested, but 1 already present." in login_result.stderr'
