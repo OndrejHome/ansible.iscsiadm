@@ -19,3 +19,12 @@
     --portal {{ (item.path|basename).split(',')[1] }}:{{ (item.path|basename).split(',')[2] }}
   with_items:
     - "{{ find_result['files'] }}"
+
+- name: Change to automatic startup on *SUSE
+  command: >-
+    iscsiadm --mode node --targetname {{ (item.path|basename).split(',')[0] }}
+    --portal {{ (item.path|basename).split(',')[1] }}:{{ (item.path|basename).split(',')[2] }}
+    -o update -n node.conn[0].startup -v automatic -n node.startup -v automatic
+  with_items:
+    - "{{ find_result['files'] }}"
+  when: 'ansible_distribution == "SLES" or ansible_distribution == "openSUSE Leap"'
