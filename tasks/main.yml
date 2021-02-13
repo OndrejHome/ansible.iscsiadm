@@ -19,6 +19,12 @@
     enabled: true
     state: 'started'
 
+- name: Set startup to automatic in /etc/iscsi/iscid.conf
+  lineinfile:
+    path: /etc/iscsi/iscsid.conf
+    regex: '^node\.startup\ =\ manual'
+    line: node.startup = automatic
+
 - name: Collect facts about installed iSCSI initiator
   iscsiadm_facts:
 
