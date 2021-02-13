@@ -12,10 +12,18 @@
     file_type: 'link'
   register: find_result
 
-  # FIXME: figure out how to run login only when we are not yet logged in
+- name: Find out if we are already logged in on the target
+  shell: grep -c -E "^{{ (item.path|basename).split(',')[0] }}$" /sys/class/iscsi_session/*/targetname
+  register: check_for_existing_login
+  with_items:
+    - "{{ find_result['files'] }}"
+
 - name: Login into iSCSI server
   command: >-
     iscsiadm --mode node --targetname {{ (item.path|basename).split(',')[0] }} --login
     --portal {{ (item.path|basename).split(',')[1] }}:{{ (item.path|basename).split(',')[2] }}
   with_items:
     - "{{ find_result['files'] }}"
+  loop_control:
+    index_var: loop_index
+  when: 'check_for_existing_login.results[loop_index].rc != 0'
