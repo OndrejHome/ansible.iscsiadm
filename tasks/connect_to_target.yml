@@ -13,6 +13,7 @@
   register: find_result
 
 - name: Find out if we are already logged in on the target
+  # shell needed here for glob expansion
   shell: grep -c -E "^{{ (item.path|basename).split(',')[0] }}$" /sys/class/iscsi_session/*/targetname
   register: check_for_existing_login
   with_items:
