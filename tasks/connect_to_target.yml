@@ -12,10 +12,35 @@
     file_type: 'link'
   register: find_result
 
-  # FIXME: figure out how to run login only when we are not yet logged in
+- name: Check if we have existing sessions
+  command: find /sys/class/iscsi_session/ -type l
+  register: look_for_sessions_files
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Find out if we are already logged in on the target
+  # shell needed here for glob expansion
+  shell: grep -c -E "^{{ (item.path|basename).split(',')[0] }}$" /sys/class/iscsi_session/*/targetname
+  register: check_for_existing_login
+  with_items:
+    - "{{ find_result['files'] }}"
+  # only if there really are existing sessions
+  when: 'look_for_sessions_files.stdout_lines != []'
+  changed_when: false
+  check_mode: false
+
 - name: Login into iSCSI server
   command: >-
     iscsiadm --mode node --targetname {{ (item.path|basename).split(',')[0] }} --login
     --portal {{ (item.path|basename).split(',')[1] }}:{{ (item.path|basename).split(',')[2] }}
   with_items:
     - "{{ find_result['files'] }}"
+  loop_control:
+    index_var: loop_index
+  # login only if
+  # - there are no existing sessions at all OR
+  # - there are sessions but we did not yet connect to the current target
+  when:
+    look_for_sessions_files.stdout_lines == [] or
+    (look_for_sessions_files.stdout_lines != [] and check_for_existing_login.results[loop_index].rc != 0)
