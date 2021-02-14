@@ -21,9 +21,12 @@
 
 - name: Set startup to automatic in /etc/iscsi/iscid.conf
   lineinfile:
-    path: /etc/iscsi/iscsid.conf
+    path: '/etc/iscsi/iscsid.conf'
     regex: '^node\.startup\ =\ manual'
-    line: node.startup = automatic
+    line: 'node.startup = automatic'
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
 
 - name: Collect facts about installed iSCSI initiator
   iscsiadm_facts:
