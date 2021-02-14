@@ -17,6 +17,7 @@
   register: look_for_sessions_files
   changed_when: false
   failed_when: false
+  check_mode: false
 
 - name: Find out if we are already logged in on the target
   # shell needed here for glob expansion
@@ -27,6 +28,7 @@
   # only if there really are existing sessions
   when: 'look_for_sessions_files.stdout_lines != []'
   changed_when: false
+  check_mode: false
 
 - name: Login into iSCSI server
   command: >-
