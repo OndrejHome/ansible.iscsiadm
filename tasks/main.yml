@@ -2,7 +2,7 @@
 
 - name: Include RHEL/CentOS variables
   include_vars: vars_RedHat_CentOS.yml
-  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
+  when: ansible_distribution in ['RedHat','CentOS','AlmaLinux']
 
 - name: Include SLES/openSUSE variable
   include_vars: vars_SUSE_openSUSE.yml
