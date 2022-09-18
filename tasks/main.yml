@@ -42,7 +42,8 @@
     mode: '0600'
   notify: restart service
 
-- meta: flush_handlers
+- name: flush_handlers
+  meta: flush_handlers
 
 - name: Connect to iSCSI target
   include_tasks: connect_to_target.yml
