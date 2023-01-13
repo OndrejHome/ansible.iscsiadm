@@ -1,3 +1,5 @@
+![Ansible Lint](https://github.com/OndrejHome/ansible.iscsiadm/workflows/Ansible%20Lint/badge.svg)
+
 iscsiadm
 =========
 
